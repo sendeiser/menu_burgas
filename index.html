@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BURGA'S CHAMICAL — Carta Retro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="bg-aurora" aria-hidden="true"></div>
+  <div class="scanlines"></div>
+  <header class="site-header">
+    <div class="logo">
+      <img src="images/logoburgas.png" alt="Logo Burga's" class="logo-img">
+      <h1>BURGA'S CHAMICAL</h1>
+    </div>
+    <p class="tagline">Sabor auténtico, experiencia única</p>
+  </header>
+  <nav class="top-nav">
+    <button class="nav-btn" data-target="clasicas">Clásicas</button>
+    <button class="nav-btn" data-target="dobles">Dobles</button>
+    <button class="nav-btn" data-target="especiales">Especiales</button>
+    <button class="nav-btn" data-target="veggie">Veggie</button>
+    <button class="nav-btn" data-target="combos">Combos</button>
+    <button class="nav-btn" data-target="extras">Extras</button>
+    <button class="nav-btn" data-target="bebidas">Bebidas</button>
+    <button class="nav-btn" data-target="postres">Postres</button>
+  </nav>
+
+  <section class="promo-banner">
+    <div class="promo-content">
+      <h2>¡Promociones Especiales!</h2>
+      <p>Descubre nuestras ofertas exclusivas y nuevas creaciones</p>
+      <button class="promo-btn">Ver Más</button>
+    </div>
+    <div class="promo-image">
+      <img src="images/burgaflyer.jpeg" alt="Promociones Burga's">
+    </div>
+  </section>
+
+  <main class="menu">
+    <!-- Sección: Clásicas -->
+    <section id="clasicas" class="menu-section">
+      <h2>Clásicas</h2>
+      <div class="cards">
+        <article class="card">
+          <div class="card-media" data-fallback="Hamburguesa Clásica"></div>
+          <div class="card-body">
+            <h3>Hamburguesa Clásica</h3>
+            <p>Medallón de carne 120g, queso americano, lechuga, tomate, cebolla, salsa especial.</p>
+            <div class="price">$3500</div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-media" data-fallback="Cheeseburga"></div>
+          <div class="card-body">
+            <h3>Cheeseburga</h3>
+            <p>Clásica + doble queso, pepinillos y aderezo de la casa. Irresistible.</p>
+            <div class="price">$3800</div>
+          </div>
+        </article>
+      </div>
+    </section>
+    <!-- Sección: Dobles -->
+    <section id="dobles" class="menu-section">
+      <h2>Dobles</h2>
+      <div class="cards">
+        <article class="card">
+          <div class="card-media" data-fallback="Doble Smash"></div>
+          <div class="card-body">
+            <h3>Doble Smash</h3>
+            <p>2x medallones smash 100g, cheddar, cebolla grillada, salsa de la casa.</p>
+            <div class="price">$5200</div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-media" data-fallback="Doble Bacon"></div>
+          <div class="card-body">
+            <h3>Doble Bacon</h3>
+            <p>2x carne, triple cheddar, panceta crocante y mayo ahumada.</p>
+            <div class="price">$5600</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Sección: Especiales -->
+    <section id="especiales" class="menu-section">
+      <h2>Especiales</h2>
+      <div class="cards">
+        <article class="card">
+          <div class="card-media" data-fallback="Burga Chamical"></div>
+          <div class="card-body">
+            <h3>Burga Chamical</h3>
+            <p>Carne 150g, queso suizo, cebolla caramelizada, champiñones y alioli.</p>
+            <div class="price">$5800</div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-media" data-fallback="Tex-Mex"></div>
+          <div class="card-body">
+            <h3>Tex‑Mex</h3>
+            <p>Guacamole, pico de gallo, jalapeños, queso pepper jack y salsa chipotle.</p>
+            <div class="price">$5900</div>
+          </div>
+        </article>
+      </div>
+    </section>
+    <!-- Sección: Veggie -->
+    <section id="veggie" class="menu-section">
+      <h2>Veggie</h2>
+      <div class="cards">
+        <article class="card">
+          <div class="card-media" data-fallback="Veggie Crunch"></div>
+          <div class="card-body">
+            <h3>Veggie Crunch</h3>
+            <p>Medallón vegetal crispy, queso, vegetales frescos, salsa de yogur y limón.</p>
+            <div class="price">$4900</div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-media" data-fallback="Portobello Melt"></div>
+          <div class="card-body">
+            <h3>Portobello Melt</h3>
+            <p>Portobello grillado, queso provolone, rúcula y pesto de albahaca.</p>
+            <div class="price">$5200</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Sección: Combos -->
+    <section id="combos" class="menu-section">
+      <h2>Combos</h2>
+      <div class="cards">
+        <article class="card">
+          <div class="card-media" data-fallback="Combo Clásico"></div>
+          <div class="card-body">
+            <h3>Combo Clásico</h3>
+            <p>Hamburguesa + papas + bebida a elección.</p>
+            <div class="price">$6200</div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-media" data-fallback="Combo Doble"></div>
+          <div class="card-body">
+            <h3>Combo Doble</h3>
+            <p>Doble smash + papas con cheddar + bebida grande.</p>
+            <div class="price">$7800</div>
+          </div>
+        </article>
+      </div>
+    </section>
+    <!-- Sección: Extras -->
+    <section id="extras" class="menu-section">
+      <h2>Extras</h2>
+      <div class="cards">
+        <article class="card">
+          <div class="card-media" data-fallback="Papas Clásicas"></div>
+          <div class="card-body">
+            <h3>Papas Clásicas</h3>
+            <p>Papas fritas doradas y crujientes. Porción individual.</p>
+            <div class="price">$1800</div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-media" data-fallback="Papas Cheddar Bacon"></div>
+          <div class="card-body">
+            <h3>Papas Cheddar Bacon</h3>
+            <p>Papas con salsa cheddar y panceta crocante. Porción para compartir.</p>
+            <div class="price">$2500</div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Sección: Bebidas -->
+    <section id="bebidas" class="menu-section">
+      <h2>Bebidas</h2>
+      <div class="cards">
+        <article class="card">
+          <div class="card-media" data-fallback="Gaseosa"></div>
+          <div class="card-body">
+            <h3>Gaseosas</h3>
+            <p>Cola, Lima‑Limón, Naranja. Tamaños: 350ml / 500ml.</p>
+            <div class="price">$900 / $1200</div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-media" data-fallback="Cervezas"></div>
+          <div class="card-body">
+            <h3>Cervezas</h3>
+            <p>Rubia, IPA, Negra. Botellín / Pintas artesanales.</p>
+            <div class="price">$1600 / $2200</div>
+          </div>
+        </article>
+      </div>
+    </section>
+    <!-- Sección: Postres -->
+    <section id="postres" class="menu-section">
+      <h2>Postres</h2>
+      <div class="cards">
+        <article class="card">
+          <div class="card-media" data-fallback="Brownie"></div>
+          <div class="card-body">
+            <h3>Brownie con Helado</h3>
+            <p>Brownie de chocolate, helado de vainilla y salsa de caramelo.</p>
+            <div class="price">$2200</div>
+          </div>
+        </article>
+        <article class="card">
+          <div class="card-media" data-fallback="Milkshake"></div>
+          <div class="card-body">
+            <h3>Milkshake</h3>
+            <p>Chocolate, frutilla o vainilla. Batido espeso estilo diner retro.</p>
+            <div class="price">$1900</div>
+          </div>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>© BURGA'S CHAMICAL — Hecho con sabor autentico</p>
+    <p class="footer-note">Imágenes reales se cargarán desde la carpeta "images" si están disponibles.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
+  <!-- Elementos decorativos -->
+  <div class="decorative-elements">
+    <div class="corner-accent top-left"></div>
+    <div class="corner-accent top-right"></div>
+    <div class="corner-accent bottom-left"></div>
+    <div class="corner-accent bottom-right"></div>
+    <div class="floating-circuit"></div>
+    <div class="floating-circuit"></div>
+    <div class="floating-circuit"></div>
+  </div>
+  
+  <div id="particles" aria-hidden="true"></div>
+  <!-- Modal de producto -->
+  <div id="product-modal" class="modal" aria-hidden="true" role="dialog" aria-label="Detalles de producto">
+    <div class="modal-backdrop" data-close="true"></div>
+    <div class="modal-content" role="document">
+      <button class="modal-close" aria-label="Cerrar">✕</button>
+      <div class="modal-media"></div>
+      <div class="modal-body">
+        <h3 class="modal-title"></h3>
+        <p class="modal-desc"></p>
+        <div class="modal-price"></div>
+      </div>
+    </div>
+  </div>
+  <button id="btnTop" class="btn-top" aria-label="Volver arriba">▲</button>
