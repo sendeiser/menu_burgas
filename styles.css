@@ -14,6 +14,13 @@
     --gradient-secondary: linear-gradient(135deg, #f9c74f, #f8961e);
     --shadow-neon: 0 0 10px rgba(248, 150, 30, 0.5), 0 0 20px rgba(248, 150, 30, 0.3);
     --shadow-accent: 0 0 10px rgba(230, 57, 70, 0.5), 0 0 20px rgba(230, 57, 70, 0.3);
+    
+    /* Variables para animaciones */
+    --anim-duration-fast: 0.3s;
+    --anim-duration-medium: 0.5s;
+    --anim-duration-slow: 0.8s;
+    --anim-timing: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --anim-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Bebas+Neue&display=swap');
@@ -42,7 +49,65 @@ body {
       background-position: 100% 50%;
   }
   100% {
-      background-position: 0% 100%;
+      background-position: 0% 0%;
+  }
+}
+
+/* Nuevas animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+@keyframes glow {
+  0% {
+    box-shadow: 0 0 5px rgba(248, 150, 30, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(248, 150, 30, 0.8), 0 0 30px rgba(230, 57, 70, 0.5);
+  }
+  100% {
+    box-shadow: 0 0 5px rgba(248, 150, 30, 0.5);
   }
 }
 
@@ -65,19 +130,21 @@ body {
   padding: 20px 24px;
   text-align: center;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  animation: fadeIn var(--anim-duration-medium) var(--anim-timing) forwards;
 }
 .logo { display: flex; align-items: center; gap: 16px; justify-content: center; }
 .logo-img {
   height: 60px;
   width: auto;
   filter: drop-shadow(0 0 8px rgba(248,150,30,.6));
+  animation: float 4s ease-in-out infinite;
 }
 .logo h1 {
   margin: 0; font-family: 'Bebas Neue', sans-serif; font-weight: 400; font-size: 32px; letter-spacing: 2px;
   text-shadow: 0 0 12px rgba(230,57,70,.8), 0 0 20px rgba(248,150,30,.6);
   color: var(--text-color);
 }
-.tagline { margin: 8px 0 0; font-size: 18px; color: var(--secondary-color); opacity: 0.9; font-weight: 400; }
+.tagline { margin: 8px 0 0; font-size: 18px; color: var(--secondary-color); opacity: 0.9; font-weight: 400; animation: fadeIn var(--anim-duration-medium) var(--anim-timing) 0.2s forwards; opacity: 0; }
 
 .top-nav { 
   display: flex; 
@@ -99,7 +166,21 @@ body {
   font-weight: 500;
   font-size: 15px;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all var(--anim-duration-fast) var(--anim-timing);
+  position: relative;
+  overflow: hidden;
+}
+.nav-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-secondary);
+  opacity: 0.5;
+  transition: transform var(--anim-duration-fast) var(--anim-timing);
+  z-index: -1;
 }
 .nav-btn:hover, .nav-btn.active {
   background: rgba(230, 57, 70, 0.15);
@@ -107,6 +188,9 @@ body {
   border-color: var(--secondary-color);
   box-shadow: 0 0 10px rgba(248, 150, 30, 0.2);
   transform: translateY(-2px);
+}
+.nav-btn:hover::before {
+  transform: translateX(100%);
 }
 
 .menu {
@@ -229,6 +313,14 @@ body {
   overflow: hidden;
 }
 
+.menu-section:nth-child(odd) {
+  animation: slideInLeft var(--anim-duration-medium) var(--anim-timing) both;
+}
+
+.menu-section:nth-child(even) {
+  animation: slideInRight var(--anim-duration-medium) var(--anim-timing) both;
+}
+
 .menu-section::before {
   content: '';
   position: absolute;
@@ -335,10 +427,12 @@ body {
   background: var(--card-bg);
   border-radius: 8px;
   overflow: hidden;
-  transition: all 0.4s ease;
+  transition: all var(--anim-duration-fast) var(--anim-timing);
   border: 1px solid rgba(248,150,30,0.2);
   box-shadow: 0 10px 20px rgba(0,0,0,0.2);
   position: relative;
+  animation: fadeIn var(--anim-duration-medium) var(--anim-timing) both;
+  animation-delay: calc(var(--card-index, 0) * 0.1s);
 }
 
 .card::before {
@@ -683,7 +777,10 @@ body {
   border-radius: 50%;
   background: var(--card-bg);
   border: 2px solid var(--accent-color);
-  transition: all 0.3s ease;
+  transition: all var(--anim-duration-fast) var(--anim-bounce);
+  animation: fadeIn var(--anim-duration-medium) var(--anim-timing) forwards;
+  animation-delay: calc(var(--icon-index, 0) * 0.15s + 0.5s);
+  opacity: 0;
 }
 
 .social-icon svg {
@@ -727,6 +824,18 @@ body {
     height: 40px;
   }
   
+  /* Optimización de rendimiento para animaciones */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
   .social-icon svg {
     width: 20px;
     height: 20px;
@@ -736,10 +845,71 @@ body {
 /* Focus styles */
 .nav-btn:focus { outline: 3px dashed #2bdfff; outline-offset: 3px; }
 
+/* Optimización de rendimiento para animaciones */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Clase para activar animaciones cuando el contenido está cargado */
+.loaded .menu-section {
+  animation-play-state: running;
+}
+
+.loaded .card {
+  animation-play-state: running;
+}
+
+.loaded .social-icon {
+  animation-play-state: running;
+}
+
+/* Botón volver arriba */
+#btn-volver-arriba {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: var(--accent-color);
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all var(--anim-duration-fast) var(--anim-bounce);
+  box-shadow: var(--shadow-elevation-medium);
+  z-index: 1000;
+}
+
+#btn-volver-arriba.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+#btn-volver-arriba:hover {
+  background: var(--accent-color-dark);
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-elevation-high);
+}
+
+#btn-volver-arriba svg {
+  width: 24px;
+  height: 24px;
+}
+
 /* Section anchors offset for sticky header */
 .menu-section { scroll-margin-top: 84px; }
-
-/* Improve contrast and legibilidad */
 .card-body p { text-shadow: 0 1px 0 rgba(0,0,0,.4); }
 
 /* Responsive tweaks */

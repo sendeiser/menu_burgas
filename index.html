@@ -8,6 +8,26 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Inter:wght@300;400;600;700&family=Space+Grotesk:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css" />
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // Agregar índices a las tarjetas para animaciones escalonadas
+      const cards = document.querySelectorAll('.card');
+      cards.forEach((card, index) => {
+        card.style.setProperty('--card-index', index);
+      });
+      
+      // Agregar índices a los iconos sociales
+      const socialIcons = document.querySelectorAll('.social-icon');
+      socialIcons.forEach((icon, index) => {
+        icon.style.setProperty('--icon-index', index);
+      });
+      
+      // Agregar clase para activar animaciones
+      setTimeout(() => {
+        document.body.classList.add('loaded');
+      }, 100);
+    });
+  </script>
 </head>
 <body>
   <div class="bg-aurora" aria-hidden="true"></div>
@@ -259,6 +279,12 @@
   </footer>
 
   <script src="script.js"></script>
+  <!-- Botón para volver arriba -->
+  <button id="btn-volver-arriba" aria-label="Volver al inicio de la página">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+      <path d="M12 4l8 8h-6v8h-4v-8H4z" fill="currentColor"/>
+    </svg>
+  </button>
 </body>
 </html>
   <!-- Elementos decorativos -->

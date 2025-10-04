@@ -153,16 +153,27 @@ if (accentToggle) {
     document.body.classList.toggle('accent-strong', accentToggle.checked);
   });
 }
-// Botón Top: mostrar/ocultar y scroll arriba
-const btnTop = document.getElementById('btnTop');
-if (btnTop) {
-  const toggleTop = () => btnTop.classList.toggle('show', window.scrollY > 300);
-  window.addEventListener('scroll', toggleTop, { passive: true });
-  window.addEventListener('load', toggleTop);
-  btnTop.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+// Funcionalidad para el botón de volver arriba
+document.addEventListener('DOMContentLoaded', function() {
+  const btnVolverArriba = document.getElementById('btn-volver-arriba');
+  
+  // Mostrar/ocultar el botón según la posición de scroll
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 300) {
+      btnVolverArriba.classList.add('visible');
+    } else {
+      btnVolverArriba.classList.remove('visible');
+    }
   });
-}
+  
+  // Funcionalidad de desplazamiento suave al hacer clic
+  btnVolverArriba.addEventListener('click', function() {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+  });
+});
 // Audio ambiental sutil con Web Audio API
 (function(){
   const btn = document.getElementById('audioToggle');
