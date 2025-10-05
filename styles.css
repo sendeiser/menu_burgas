@@ -845,6 +845,36 @@ body {
 /* Focus styles */
 .nav-btn:focus { outline: 3px dashed #2bdfff; outline-offset: 3px; }
 
+/* Estilos para el enlace de administración */
+.admin-link {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--accent-color);
+  text-decoration: none;
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.8rem;
+  padding: 8px 12px;
+  border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.admin-link:hover {
+  background-color: var(--accent-color);
+  color: #000;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(255, 158, 27, 0.3);
+}
+
+.admin-link svg {
+  width: 16px;
+  height: 16px;
+}
+
 /* Optimización de rendimiento para animaciones */
 @media (prefers-reduced-motion: reduce) {
   *,
