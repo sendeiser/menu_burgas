@@ -1,7 +1,223 @@
+// Sistema de audio
+const audioSystem = {
+  backgroundMusic: null,
+  clickSound: null,
+  isMuted: false,
+  audioButton: null,
+  audioLoaded: false,
+
+  init() {
+    // Crear botón de control de audio
+    this.createAudioControl();
+    
+    // Intentar inicializar audio automáticamente
+    this.initAudio();
+    
+    // Backup: inicializar audio en respuesta a interacción del usuario
+    document.addEventListener('click', () => this.initAudio(), { once: true });
+    document.addEventListener('touchstart', () => this.initAudio(), { once: true });
+    document.addEventListener('keydown', () => this.initAudio(), { once: true });
+  },
+
+  initAudio() {
+    if (this.audioLoaded) return;
+    
+    try {
+      // Música de fondo - usando una fuente alternativa gratuita
+      this.backgroundMusic = new Audio('https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3');
+      this.backgroundMusic.loop = true;
+      this.backgroundMusic.volume = 0.3;
+      
+      // Sonido de clic
+      this.clickSound = new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_270f49b303.mp3');
+      this.clickSound.volume = 0.5;
+      
+      // Iniciar música de fondo con fade in
+      this.backgroundMusic.play().then(() => {
+        console.log('¡Música iniciada correctamente!');
+        // Fade in gradual
+        let vol = 0;
+        this.backgroundMusic.volume = vol;
+        const interval = setInterval(() => {
+          vol += 0.05;
+          if (vol >= 0.3) {
+            vol = 0.3;
+            clearInterval(interval);
+          }
+          this.backgroundMusic.volume = vol;
+        }, 100);
+      }).catch(err => {
+        console.error('Error al reproducir música:', err);
+        // Mostrar mensaje más visible para activar audio
+        const audioMessage = document.createElement('div');
+        audioMessage.style.cssText = 'position:fixed;top:20px;left:50%;transform:translateX(-50%);background:#ff6b6b;color:white;padding:10px 20px;border-radius:5px;z-index:1000;cursor:pointer;';
+        audioMessage.innerHTML = '👆 Haz clic aquí para activar la música 🎵';
+        audioMessage.onclick = () => {
+          this.backgroundMusic.play();
+          audioMessage.remove();
+        };
+        document.body.appendChild(audioMessage);
+      });
+      
+      this.audioLoaded = true;
+      this.updateButtonState();
+    } catch (error) {
+      console.error('Error al inicializar el audio:', error);
+    }
+  },
+  
+  // Reproducir efecto de sonido de clic
+  playClick() {
+    if (this.isMuted || !this.clickSound) return;
+    
+    try {
+      // Usar AudioContext para mejor rendimiento en múltiples reproducciones
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      if (AudioContext) {
+        const audioCtx = new AudioContext();
+        const source = audioCtx.createBufferSource();
+        
+        // Fallback a método tradicional
+        const sound = this.clickSound.cloneNode();
+        sound.play().catch(err => console.log('Error al reproducir sonido:', err));
+      } else {
+        // Fallback para navegadores sin AudioContext
+        const sound = this.clickSound.cloneNode();
+        sound.play().catch(err => console.log('Error al reproducir sonido:', err));
+      }
+    } catch (e) {
+      // Fallback final
+      const sound = this.clickSound.cloneNode();
+      sound.play().catch(err => console.log('Error al reproducir sonido:', err));
+    }
+  },
+  
+  // Alternar entre silenciar/activar el audio
+  toggleMute() {
+    this.isMuted = !this.isMuted;
+    
+    if (this.backgroundMusic) {
+      if (this.isMuted) {
+        // Fade out
+        let vol = this.backgroundMusic.volume;
+        const interval = setInterval(() => {
+          vol -= 0.05;
+          if (vol <= 0) {
+            vol = 0;
+            clearInterval(interval);
+            this.backgroundMusic.muted = true;
+          }
+          this.backgroundMusic.volume = vol;
+        }, 50);
+      } else {
+        // Fade in
+        this.backgroundMusic.muted = false;
+        let vol = 0;
+        this.backgroundMusic.volume = vol;
+        const interval = setInterval(() => {
+          vol += 0.05;
+          if (vol >= 0.3) {
+            vol = 0.3;
+            clearInterval(interval);
+          }
+          this.backgroundMusic.volume = vol;
+        }, 50);
+      }
+    }
+    
+    this.updateButtonState();
+    this.playClick();
+  },
+  
+  updateButtonState() {
+    if (this.audioButton) {
+      if (this.isMuted) {
+        this.audioButton.classList.add('muted');
+        this.audioButton.setAttribute('title', 'Activar audio');
+      } else {
+        this.audioButton.classList.remove('muted');
+        this.audioButton.setAttribute('title', 'Desactivar audio');
+      }
+    }
+  },
+  
+  // Crear el botón de control de audio
+  createAudioControl() {
+    this.audioButton = document.createElement('button');
+    this.audioButton.id = 'audio-control';
+    this.audioButton.className = 'audio-control';
+    this.audioButton.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M16 21c3.527-1.547 5.999-4.909 5.999-9S19.527 4.547 16 3v2c2.387 1.386 3.999 4.047 3.999 7S18.387 17.614 16 19v2z"/><path fill="currentColor" d="M16 7v10c1.225-1.1 2-3.229 2-5s-.775-3.9-2-5z"/><path fill="currentColor" d="M11.003 3h-1.29C9.173 3 8.649 3.38 8.301 4.003l-3.298 5.99c-.279.509-.722.507-1.003.997v2.002c0 .489.225.997.503.997h.5l3.298 6.01c.348.623.892.993 1.433.993h1.29c.56 0 1.017-.399 1.017-.993v-14c0-.594-.457-.999-1.017-.999z"/></svg>';
+    this.audioButton.setAttribute('aria-label', 'Control de audio');
+    this.audioButton.setAttribute('title', 'Activar/Desactivar audio');
+    
+    // Estilo del botón
+    const style = document.createElement('style');
+    style.textContent = `
+      .audio-control {
+        position: fixed;
+        bottom: 20px;
+        left: 20px;
+        z-index: 1000;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: rgba(0, 0, 0, 0.7);
+        border: 2px solid var(--accent-color, #ff6b6b);
+        color: var(--accent-color, #ff6b6b);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 0 10px rgba(255, 107, 107, 0.5);
+      }
+      .audio-control:hover {
+        transform: scale(1.1);
+        box-shadow: 0 0 15px rgba(255, 107, 107, 0.7);
+      }
+      .audio-control.muted {
+        opacity: 0.7;
+      }
+      .audio-control.muted::after {
+        content: '';
+        position: absolute;
+        width: 70%;
+        height: 2px;
+        background-color: var(--accent-color, #ff6b6b);
+        transform: rotate(45deg);
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .audio-control {
+          transition: none;
+        }
+        .audio-control:hover {
+          transform: none;
+        }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    // Agregar botón al DOM
+    document.body.appendChild(this.audioButton);
+    
+    // Agregar evento de clic
+    this.audioButton.addEventListener('click', () => {
+      this.toggleMute();
+      this.playClick();
+    });
+  }
+};
+
+// Inicializar el sistema de audio
+audioSystem.init();
+
 // Navegación por secciones con scroll suave
 const buttons = document.querySelectorAll('.nav-btn');
 buttons.forEach(btn => {
   btn.addEventListener('click', () => {
+    // Reproducir efecto de sonido al hacer clic
+    audioSystem.playClick();
+    
     const targetId = btn.getAttribute('data-target');
     const el = document.getElementById(targetId);
     if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -115,6 +331,9 @@ function closeModal() {
 
 document.querySelectorAll('.card').forEach(card => {
   card.addEventListener('click', () => {
+    // Reproducir efecto de sonido al hacer clic en una tarjeta
+    audioSystem.playClick();
+    
     const title = card.querySelector('h3')?.textContent?.trim() || '';
     const desc = card.querySelector('p')?.textContent?.trim() || '';
     const price = card.querySelector('.price')?.textContent?.trim() || '';
@@ -126,9 +345,15 @@ document.querySelectorAll('.card').forEach(card => {
   });
 });
 
-modal?.querySelector('.modal-close')?.addEventListener('click', closeModal);
+modal?.querySelector('.modal-close')?.addEventListener('click', () => {
+  audioSystem.playClick();
+  closeModal();
+});
 modal?.querySelector('.modal-backdrop')?.addEventListener('click', (e) => {
-  if (e.target instanceof HTMLElement && e.target.dataset.close === 'true') closeModal();
+  if (e.target instanceof HTMLElement && e.target.dataset.close === 'true') {
+    audioSystem.playClick();
+    closeModal();
+  }
 });
 window.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
 
@@ -150,6 +375,7 @@ if (searchInput) {
 const accentToggle = document.getElementById('accentToggle');
 if (accentToggle) {
   accentToggle.addEventListener('change', () => {
+    audioSystem.playClick();
     document.body.classList.toggle('accent-strong', accentToggle.checked);
   });
 }
@@ -168,6 +394,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Funcionalidad de desplazamiento suave al hacer clic
   btnVolverArriba.addEventListener('click', function() {
+    audioSystem.playClick();
     window.scrollTo({
       top: 0,
       behavior: 'smooth'
