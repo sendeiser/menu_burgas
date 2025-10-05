@@ -29,7 +29,7 @@ const audioSystem = {
       this.backgroundMusic.volume = 0.3;
       
       // Sonido de clic
-      this.clickSound = new Audio('https://cdn.pixabay.com/download/audio/2022/03/15/audio_270f49b303.mp3');
+      this.clickSound = new Audio('https://audio-previews.elements.envatousercontent.com/files/479182924/preview.mp3');
       this.clickSound.volume = 0.5;
       
       // Iniciar música de fondo con fade in
@@ -71,24 +71,12 @@ const audioSystem = {
     if (this.isMuted || !this.clickSound) return;
     
     try {
-      // Usar AudioContext para mejor rendimiento en múltiples reproducciones
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      if (AudioContext) {
-        const audioCtx = new AudioContext();
-        const source = audioCtx.createBufferSource();
-        
-        // Fallback a método tradicional
-        const sound = this.clickSound.cloneNode();
-        sound.play().catch(err => console.log('Error al reproducir sonido:', err));
-      } else {
-        // Fallback para navegadores sin AudioContext
-        const sound = this.clickSound.cloneNode();
-        sound.play().catch(err => console.log('Error al reproducir sonido:', err));
-      }
+      // Método simple y directo para reproducir el sonido
+      const sound = new Audio('https://audio-previews.elements.envatousercontent.com/files/479182924/preview.mp3');
+      sound.volume = 0.5;
+      sound.play().catch(err => console.log('Error al reproducir sonido de clic:', err));
     } catch (e) {
-      // Fallback final
-      const sound = this.clickSound.cloneNode();
-      sound.play().catch(err => console.log('Error al reproducir sonido:', err));
+      console.error('Error al reproducir sonido de clic:', e);
     }
   },
   
